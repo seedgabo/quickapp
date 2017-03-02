@@ -4,6 +4,7 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { TabsPage } from '../pages/tabs/tabs';
 
+import { CodePush } from 'ionic-native';
 
 @Component({
   templateUrl: 'app.html'
@@ -17,6 +18,9 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
       Splashscreen.hide();
+      const downloadProgress = (progress) => { console.log(`Downloaded ${progress.receivedBytes} of ${progress.totalBytes}`); }
+      CodePush.sync({}, downloadProgress).subscribe((syncStatus) => console.log(syncStatus));
+
     });
   }
 }

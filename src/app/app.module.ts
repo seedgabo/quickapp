@@ -14,13 +14,13 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireOfflineModule } from 'angularfire2-offline';
 
-export const firebaseConfig = {
-  apiKey: "xxxxxxxxxx",
-  authDomain: "your-domain-name.firebaseapp.com",
-  databaseURL: "https://your-domain-name.firebaseio.com",
-  storageBucket: "your-domain-name.appspot.com",
-  messagingSenderId: '<your-messaging-sender-id>'
-};
+export const   firebaseConfig = {
+    apiKey: "AIzaSyCdjCKr5DXqMLXw5feG_RfW4PtMfiq7s2Q",
+    authDomain: "lili-styles.firebaseapp.com",
+    databaseURL: "https://lili-styles.firebaseio.com",
+    storageBucket: "lili-styles.appspot.com",
+    messagingSenderId: "911551807411"
+  };
 
 @NgModule({
   declarations: [

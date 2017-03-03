@@ -1,17 +1,58 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
+    <ion-navbar color="primary">
+        <ion-title>
+            <ion-icon name="cart"></ion-icon>
+            Ventas
+        </ion-title>
+    </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+<ion-content>
+    <ion-list>
+        <ion-item *ngFor="let item of api.items| async">
+            <h2>
+                <b>{{item.worker}}</b>
+
+            </h2>
+            <p ion-text color="primary">
+                {{item.value | currency:'bsF':true}} | &nbsp;&nbsp;
+                {{item.value * item.percent | currency:'BsF':true}}
+            </p>
+            <button ion-button item-right clear icon-only (click)="removeItem(item)">
+                <ion-icon name="trash" color="danger"></ion-icon>
+            </button>
+        </ion-item>
+    </ion-list>
+    <ion-fab bottom right edge>
+        <button ion-fab mini color="secondary" (click)="addItem()"  [disabled]="newItem.value == 0" >
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
+    <ion-fab top right edge>
+        <button ion-fab color="secondary" (click)="addItem()"  [disabled]="true" >
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
 </ion-content>
+<ion-footer>
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label floating>Trabajador</ion-label>
+                    <ion-select type="text" [(ngModel)]="newItem.worker">
+                        <ion-option [value]="worker" *ngFor="let worker of api.workers | async; let i = index">
+                            {{worker.name}}
+                        </ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label floating>Valor</ion-label>
+                    <ion-input type="number" min="0" max="2000000" [(ngModel)]="newItem.value"></ion-input>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-footer>

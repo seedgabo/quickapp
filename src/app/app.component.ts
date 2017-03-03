@@ -17,7 +17,11 @@ export class MyApp {
       StatusBar.styleDefault();
       Splashscreen.hide();
       const downloadProgress = (progress) => { console.log(`Downloaded ${progress.receivedBytes} of ${progress.totalBytes}`); }
-      CodePush.sync({}, downloadProgress).subscribe((syncStatus) => console.log(syncStatus));
+      CodePush.sync({}, downloadProgress).subscribe((syncStatus) => console.log(syncStatus),
+        (err)=>{
+            console.warn (err);
+        }
+        );
 
     });
   }

@@ -1,35 +1,54 @@
-import { Injectable,NgZone } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
-import {
-    AngularFireOffline,
-    AfoListObservable,
-    AfoObjectObservable } from 'angularfire2-offline';
+import Horizon from "@horizon/client";
+import * as moment from 'moment';
+import 'moment/min/locales';
+moment.locale("es");
+console.log(moment.locale());
+@Injectable()
+export class Api {
+    itemshandler: any;
+    items: any;
 
-    @Injectable()
-    export class Api {
-        items: any;
-        workers:any;
-        vales: any;
-        constructor(public http: Http,public af: AngularFire, public zone:NgZone) {
-            this.init();
-        }
+    workershandler: any;
+    workers: any;
 
-        init(){
-            this.items = this.af.database.list('/items',{
-                query: {
-                    orderByValue: true,
-                    equalTo: { value: "Gabriel", key: 'worker' }
-                }
-            });
-
-            this.workers = this.af.database.list('/workers');
-            this.workers.subscribe((data)=>{
-                console.table(data);
-            });
-
-            this.vales = this.af.database.list('/vales');
-        }
-
+    vales: any;
+    constructor(public http: Http, public zone: NgZone) {
+        this.init();
     }
+
+    init() {
+        const hz = Horizon({ host: 'localhost:8181' });
+        hz.connect({
+            host: "localhost:8181"
+        });
+
+        hz.onReady(() => {
+
+            this.workershandler = hz('workers');
+
+            this.workershandler.watch().subscribe(
+                (workers) => {
+                    this.workers = workers;
+                },
+                (err) => {
+                    console.error(err);
+                }
+            );
+
+            this.itemshandler = hz('items');
+            this.itemshandler.order("time","descending").limit(200).watch().subscribe(
+                (items) => {
+                    this.items = items;
+                },
+                (err) => {
+                    console.error(err);
+                }
+            );
+
+        });
+    }
+
+}

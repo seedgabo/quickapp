@@ -7,9 +7,7 @@ import {Api} from '../../providers/api';
 })
 export class ContactPage {
     newWorker= {name:"",percent:60}
-    constructor(public navCtrl: NavController, public api:Api, public alert:AlertController) {
-        this.api.init();
-    }
+    constructor(public navCtrl: NavController, public api:Api, public alert:AlertController) {}
 
     addWorker(){
         this.alert.create({
@@ -34,7 +32,7 @@ export class ContactPage {
                 {
                     handler: (data)=>{
                         if (data.name !="" && data.percent > 0 && data.percent <= 100) {
-                            this.api.workers.push(data);
+                            this.api.workershandler.store(data);
                         }
                     },
                     text: "Guardar"
@@ -46,6 +44,6 @@ export class ContactPage {
     }
 
     deleteWorker(worker){
-        this.api.workers.remove(worker.$key);
+        this.api.workershandler.remove(worker);
     }
 }

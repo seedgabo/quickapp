@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-navbar color="warning">
+    <ion-navbar color="primary">
         <ion-title>
             Trabajadores
         </ion-title>
@@ -8,8 +8,7 @@
 
 <ion-content>
     <ion-list>
-        <ion-list-header>Trabajadores</ion-list-header>
-        <ion-item-sliding #item *ngFor="let worker of api.workers | async">
+        <ion-item-sliding #item *ngFor="let worker of api.workers">
             <ion-item >
                 <h1>{{worker.name}}</h1>
                 <p item-right ion-text color="secondary">{{worker.percent}} % </p>

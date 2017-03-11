@@ -1,0 +1,42 @@
+<ion-header>
+
+  <ion-navbar color="secondary">
+    <ion-title>Agregar Item</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="close()" icon-only>
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Trabajador</ion-label>
+      <ion-select type="text" [(ngModel)]="newItem.worker" (ionChange)="updatePercent()">
+        <ion-option [value]="worker" *ngFor="let worker of api.workers; let i = index">
+          {{worker.name}}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Valor</ion-label>
+      <ion-input type="number" min="0" max="2000000" [(ngModel)]="newItem.value"></ion-input>
+    </ion-item>
+
+    <ion-item>
+       <ion-label floating>Porcentaje %</ion-label>
+       <ion-input type="number" min="0" max="100" [(ngModel)]="newItem.percent" value="60"></ion-input>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+<ion-footer>
+    <button ion-button color="primary" icon-right full (click)="addItem()" [disabled]="!newItem.value && newItem.value  <= 0">
+       Agregar <ion-icon name="add"></ion-icon>
+    </button>
+</ion-footer>
